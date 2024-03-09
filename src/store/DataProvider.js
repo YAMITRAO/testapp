@@ -2,7 +2,6 @@ import React, { useReducer } from 'react'
 import DataContext from './DataContext'
 
 const reducer = ( state, action) => {
-    let myMap = new Map();
 
     if(action.type === "ADD_TO_ITEMS_LIST"){
         const updatedItemsList = [action.data,...state.itemsList]
@@ -19,9 +18,11 @@ const reducer = ( state, action) => {
          state.itemsList.forEach( (val, index) => { 
             if(val.id === action.data.id ){
            
-                if(action.data.sizeType === "L"){
+                if(action.data.sizeType === "L" && val.lSize > 0){
+                    
 
                     state.itemsList[index].lSize = state.itemsList[index].lSize -1 ;
+                    
                     let data = {
                         id: val.id ,
                         name: val.name,
@@ -50,9 +51,10 @@ const reducer = ( state, action) => {
                         // console.log("adding to L ");
                         state.cartItems.push(data);
                     }
+                    
                     return
                 }
-                else if(action.data.sizeType === "M"){
+                else if(action.data.sizeType === "M" && val.mSize > 0){
 
                     state.itemsList[index].mSize = state.itemsList[index].mSize -1 ;
                     let data = {
@@ -85,7 +87,7 @@ const reducer = ( state, action) => {
                     }
                     return
                 }
-                else if(action.data.sizeType === "S"){
+                else if(action.data.sizeType === "S" && val.sSize > 0){
 
                     state.itemsList[index].sSize = state.itemsList[index].sSize -1 ;
                     let data = {
@@ -124,7 +126,7 @@ const reducer = ( state, action) => {
                 return;
          }
         });
-        console.log(state.cartItems);
+        // console.log(state.cartItems);
         return{...state}
                  
         
@@ -143,39 +145,129 @@ const reducer = ( state, action) => {
         }
     }
 
-    if( action.type === "DECREMENT_OF_CART_ITEMS"){
-        // console.log(state.cartItems);
-        state.cartItems.forEach( (val, index) => {
-            // console.log(val.id);
-            if( val.id === action.data ){
-                if(val.increment === 1){
-                    state.cartItems.pop(index);
-                    return;
-                }
-                val.increment = (+val.increment) - 1;
-                return;
-            }
-        })
-        // console.log(state.cartItems);
-        return {
-            ...state
-        }
-    }
+    if(action.type === "CART_CHANGE"){
+        // console.log(action.data);
+        if( action.data.countType === "inc_by_1"){
+            console.log("Inc by 1 clicked");
+            console.log(state.itemsList);
+            state.itemsList.forEach( (val, index) => {
+                if(val.id === action.data.id){
+                    console.log("Data found itemsList");
+                    if(action.data.sizeType === "L" && val.lSize > 0){
+                        val.lSize = val.lSize - 1;
+                        state.cartItems.forEach( (val,index) => {
+                            if(action.data.sizeType === val.sizeType && action.data.id === val.id){
+                                state.cartItems[index].lCount = state.cartItems[index].lCount + 1; 
+                            }
+                        })
+                    }
+                    else if(action.data.sizeType === "M" && val.mSize > 0){
+                        val.mSize = val.mSize - 1;
+                        state.cartItems.forEach( (val,index) => {
+                            if(action.data.sizeType === val.sizeType && action.data.id === val.id){
+                                state.cartItems[index].mCount = state.cartItems[index].mCount + 1; 
+                            }
+                        })
+                    }
+                    else if(action.data.sizeType === "S" && val.sSize > 0){
+                        val.sSize = val.sSize - 1;
+                        state.cartItems.forEach( (val,index) => {
+                            if(action.data.sizeType === val.sizeType && action.data.id === val.id){
+                                state.cartItems[index].sCount = state.cartItems[index].sCount + 1; 
+                            }
+                        })
+                    }   
 
-    if( action.type === "INCREMENT_OF_CART_ITEMS"){
-        console.log(state.cartItems);
-        
-        state.cartItems.forEach( (val, index) => {
-            console.log(val.id);
-            if( val.id === action.data ){
-                val.increment = (+val.increment) + 1;
-                return;
-            }
-        })
-        console.log(state.cartItems);
-        return {
-            ...state
+                }
+            })
         }
+
+        else if( action.data.countType === "dec_by_1"){
+            console.log("Dec by 1 clicked");
+           console.log(action.data);
+           state.cartItems.forEach( (val,index) => {
+            if(val.id === action.data.id && val.sizeType === action.data.sizeType ){
+                // console.log(" match found in CartItems");
+
+                if(action.data.sizeType === "L"){
+                    console.log("Decrease in lCount");
+                    console.log(val);
+                    val.lCount = val.lCount - 1;
+                    state.itemsList.forEach( (val,index) => {
+                        if( val.id === action.data.id){
+                             console.log("Match Found in itemList")
+                             console.log(val);
+                             val.lSize = val.lSize + 1 ;
+                            }
+                    })
+                    if(val.lCount === 0){
+                        state.cartItems.splice(index, 1);
+                    }   
+                    
+                }
+                else if(action.data.sizeType === "M"){
+                    console.log("Decrease in mCount");
+                    console.log(val);
+                    val.mCount = val.mCount - 1;
+                    state.itemsList.forEach( (val,index) => {
+                        if( val.id === action.data.id){
+                             console.log("Match Found in itemList")
+                             console.log(val);
+                             val.mSize = val.mSize + 1 ;
+                            }
+                    })
+                    if(val.mCount === 0){
+                        state.cartItems.splice(index, 1);
+                    }
+                }
+                else if(action.data.sizeType === "S"){
+                    console.log("Decrease in sCount");
+                    console.log(val);
+                    val.sCount = val.sCount - 1;
+                    state.itemsList.forEach( (val,index) => {
+                        if( val.id === action.data.id){
+                             console.log("Match Found in itemList")
+                             console.log(val);
+                             val.sSize = val.sSize + 1 ;
+                            }
+                    })
+                    if(val.sCount === 0){
+                        state.cartItems.splice(index, 1);
+                    }
+                }
+
+                
+            }
+           })
+            // console.log(state.itemsList);
+            // state.itemsList.forEach( (val,index) => {
+            //     if( val.id === action.data.id){
+            //         console.log("Match Found in itemList")
+            //     }
+            // })
+            
+
+
+            // state.cartItems.forEach( (val,index) => {
+            //     if(action.data.sizeType === val.sizeType && action.data.id === val.id){
+            //         console.log("match found" )
+            //         console.log(val);
+            //         console.log(state.cartItems[index].lCount) ;
+            //         if(state.cartItems[index].lCount === 1){
+            //             console.log("Last value f");
+            //             console.log(state.cartItems);
+            //             state.cartItems.splice(index,1);
+            //             console.log(state.cartItems)
+                        
+            //         }else{
+            //             state.cartItems[index].lCount = state.cartItems[index].lCount - 1;
+            //         }
+                     
+            //     }
+            // })
+        }
+
+        return{ ...state }
     }
 
     
@@ -189,9 +281,9 @@ const DataProvider = (props) => {
      
     const defaultState = {
         itemsList :  [
-            {id:"c1", name:"Adidas", desc: "Cotton", price: 50, lSize:100,mSize:200,sSize:300},
-            {id:"c2", name:"Nike", desc: "Popline", price: 70,lSize:100,mSize:200,sSize:300},
-            {id:"c3", name:"Levi's", desc: "Broadcloth", price: 60, lSize:100,mSize:200,sSize:300},
+            {id:"c1", name:"Adidas", desc: "Cotton", price: 50, lSize:10,mSize:10,sSize:10},
+            {id:"c2", name:"Nike", desc: "Popline", price: 70,lSize:10,mSize:20,sSize:21},
+            {id:"c3", name:"Levi's", desc: "Broadcloth", price: 60, lSize:0,mSize:200,sSize:300},
             {id:"c4", name:"Tommy", desc: "Dobby", price: 80, lSize:100,mSize:200,sSize:300},
             {id:"c5", name:"Allen Solly", desc: "Flannel", price: 40, lSize:100,mSize:200,sSize:300},
           ],
@@ -223,17 +315,17 @@ const DataProvider = (props) => {
         
       }
 
-      const cartDecrementhandler = (data) => {
+      const cartChangehandler = (data) => {
         
-        dispatchFun({type: "DECREMENT_OF_CART_ITEMS", data:data})
+        dispatchFun({type: "CART_CHANGE", data:data})
        
       }
 
-      const cartIncrementhandler = (data) => {
-        console.log("Cart increment is clicked");
-        console.log(data);
-        dispatchFun({type: "INCREMENT_OF_CART_ITEMS", data:data})
-      }
+    //   const cartIncrementhandler = (data) => {
+    //     console.log("Cart increment is clicked");
+    //     console.log(data);
+    //     dispatchFun({type: "INCREMENT_OF_CART_ITEMS", data:data})
+    //   }
 
      
       
@@ -251,8 +343,8 @@ const DataProvider = (props) => {
 
          cartVisibility : cartVisibilityHandler,
          isCartVisible : state.isCartVisible,
-         cartDecrement : cartDecrementhandler,
-         cartIncrement : cartIncrementhandler,
+         cartChange : cartChangehandler,
+        
     }
   return (
     <DataContext.Provider value={ Data }>

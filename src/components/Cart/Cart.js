@@ -14,8 +14,6 @@ const Cart = () => {
    if(CartDataArray.length > 0){
 
     CartDataArray.forEach( (val) => {
-        console.log("Total AMount calculation");
-        console.log((+val.price)*(+val.lCount));
         totalAMount += (+val.price)*(+val.lCount) + (+val.price)*(+val.mCount) + (+val.price)*(+val.sCount) ;
     });
      
@@ -33,17 +31,23 @@ const Cart = () => {
                 
                  <div>
 
-                 <button className={style.negButton} id= {val.id + val.sizeType} onClick= { (e) => {
-                    console.log(e.target.id);
-                    console.log(e.target.value);
-                    dataOfCartCtx.cartDecrement(e.target.id)
+                 <button className={style.negButton} id= {val.id } value={val.sizeType} onClick= { (e) => {
+                    let data = {
+                        id: e.target.id,
+                        sizeType: e.target.value,
+                        countType: "dec_by_1"
+                    }
+                    dataOfCartCtx.cartChange(data);
                  }}>-</button>
 
                  {val.lCount + val.mCount + val.sCount}
-                 <button className={style.posButton} id= {val.id} val={val.sizeType} onClick={(e) => {
-                    console.log(e.target.id);
-                    console.log(e.target.value);
-                    dataOfCartCtx.cartIncrement(e.target.id);
+                 <button className={style.posButton} id= {val.id} value={val.sizeType} onClick={(e) => {
+                    let data = {
+                        id: e.target.id,
+                        sizeType: e.target.value,
+                        countType: "inc_by_1"
+                    }
+                    dataOfCartCtx.cartChange(data);
                  }}>+</button>
                  </div>
                 
