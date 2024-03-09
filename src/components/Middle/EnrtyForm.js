@@ -22,7 +22,7 @@ const EnrtyForm = () => {
     }
 
     const ctx = useContext(DataContext);
-    console.log(ctx.itemsList);
+    // console.log(ctx.itemsList);
     
 
     const inputValueHandler = () => {

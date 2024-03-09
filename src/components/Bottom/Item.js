@@ -9,31 +9,34 @@ const Item = () => {
 
     const itemsList = itemsListDataCtx.itemsList;
 
-    const add1Handler = (e) => {
+    const addLHandler = (e) => {
         let data = {
-            increment: e.target.value,
+            increment: 1,
             id: e.target.id,
+            sizeType: "L"
         }
-        console.log(e.target);
+        // console.log(e.target);
         itemsListDataCtx.addItemToCart(data)
     }
 
-    const add2Handler = (e) => {
+    const addMHandler = (e) => {
         
         let data = {
-            increment: e.target.value,
+            increment: 1,
             id: e.target.id,
+            sizeType: "M"
         }
-        console.log(e.target);
+        // console.log(e.target);
         itemsListDataCtx.addItemToCart(data)
     }
 
-    const add5Handler = (e) => {
+    const addSHandler = (e) => {
         let data = {
-            increment: e.target.value,
+            increment: 1,
             id: e.target.id,
+            sizeType: "S"
         }
-        console.log(e.target);
+        // console.log(e.target);
         itemsListDataCtx.addItemToCart(data)
     }
     
@@ -45,13 +48,13 @@ const Item = () => {
             <div className={style.itemDesc} >{val.desc}</div>
             <div className={style.itemPrice}>${val.price}</div>
             <div className={style.lSize}>
-                <button  id={val.id} onClick={ add1Handler } value="1">L({val.lSize})</button>
+                <button  id={val.id} onClick={ addLHandler } value="1">L({val.lSize})</button>
             </div>
             <div className={style.mSize}>
-                <button  id={val.id} onClick={ add2Handler } value ="2">M({val.mSize})</button>
+                <button  id={val.id} onClick={ addMHandler } value ="2">M({val.mSize})</button>
                 </div>
             <div className={style.sSize}>
-                <button  id={val.id} onClick={ add5Handler } value ="5">S({val.sSize})</button>
+                <button  id={val.id} onClick={ addSHandler } value ="5">S({val.sSize})</button>
             </div>
         </div>)}
         

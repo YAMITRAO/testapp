@@ -14,38 +14,119 @@ const reducer = ( state, action) => {
     }
 
     if( action.type === "ADD_TO_CART_ITEMS"){
-        
+    
+
          state.itemsList.forEach( (val, index) => { 
             if(val.id === action.data.id ){
-                let pushToState = {...val, increment : action.data.increment}
-                state.cartItems.push(pushToState);
+           
+                if(action.data.sizeType === "L"){
+
+                    state.itemsList[index].lSize = state.itemsList[index].lSize -1 ;
+                    let data = {
+                        id: val.id ,
+                        name: val.name,
+                        desc: val.desc,
+                        price: val.price, 
+                        sizeType: "L",
+                        lCount: 1,
+                        mCount: 0,
+                        sCount : 0,
+                    }
+
+                    let isIdSame = false;
+                    if(state.cartItems.length > 0){
+                        // console.log("Yes lenght is greater then zero");
+                        state.cartItems.forEach( (val, index) => {
+                            if(action.data.id === val.id && action.data.sizeType === val.sizeType){
+                               isIdSame =  true;
+                                state.cartItems[index].lCount = state.cartItems[index].lCount + 1;
+                            } 
+                        })
+                        if(!isIdSame){
+                            state.cartItems.push(data);
+                        }
+                    }
+                    else{
+                        // console.log("adding to L ");
+                        state.cartItems.push(data);
+                    }
+                    return
+                }
+                else if(action.data.sizeType === "M"){
+
+                    state.itemsList[index].mSize = state.itemsList[index].mSize -1 ;
+                    let data = {
+                        id: val.id ,
+                        name: val.name,
+                        desc: val.desc,
+                        price: val.price, 
+                        sizeType: "M",
+                        lCount: 0,
+                        mCount: 1,
+                        sCount : 0,
+                    }
+
+                    let isIdSame = false;
+                    if(state.cartItems.length > 0){
+                        // console.log("Yes lenght is greater then zero");
+                        state.cartItems.forEach( (val, index) => {
+                            if(action.data.id === val.id && action.data.sizeType === val.sizeType){
+                               isIdSame =  true;
+                                state.cartItems[index].mCount = state.cartItems[index].mCount + 1;
+                            } 
+                        })
+                        if(!isIdSame){
+                            state.cartItems.push(data);
+                        }
+                    }
+                    else{
+                        // console.log("adding to M ");
+                        state.cartItems.push(data);
+                    }
+                    return
+                }
+                else if(action.data.sizeType === "S"){
+
+                    state.itemsList[index].sSize = state.itemsList[index].sSize -1 ;
+                    let data = {
+                        id: val.id ,
+                        name: val.name,
+                        desc: val.desc,
+                        price: val.price, 
+                        sizeType: "S",
+                        lCount: 0,
+                        mCount: 0,
+                        sCount : 1,
+                    }
+
+                    let isIdSame = false;
+                    if(state.cartItems.length > 0){
+                        // console.log("Yes lenght is greater then zero");
+                        state.cartItems.forEach( (val, index) => {
+                            if(action.data.id === val.id && action.data.sizeType === val.sizeType){
+                               isIdSame =  true;
+                                state.cartItems[index].sCount = state.cartItems[index].sCount + 1;
+                            } 
+                        })
+                        if(!isIdSame){
+                            state.cartItems.push(data);
+                        }
+                    }
+                    else{
+                        // console.log("adding to S ");
+                        state.cartItems.push(data);
+                    }
+                    return
+                }
+                // console.log(val);
+                // let pushToState = {...val}
+                // state.cartItems.push(pushToState);
                 return;
          }
         });
-        
-
-        //start
-        
-        state.cartItems.forEach( (val,index) => {
-            // console.log(val);
-            if(myMap.has(val.id)){    
-                myMap.get(val.id ).increment = +(myMap.get(val.id ).increment) + (+val.increment) ;
-            }
-            else{
-                myMap.set(val.id , {id:val.id, name:val.name, desc:val.desc, price:val.price, increment : val.increment })
-    
-            }
-            
-         });
-           
-         let updatedArray =[];
-         myMap.forEach( (val) => {
-            updatedArray.push(val);
-         })
-         //end
-
-         state.cartItems = [...updatedArray];
+        console.log(state.cartItems);
         return{...state}
+                 
         
     }
 
@@ -63,9 +144,9 @@ const reducer = ( state, action) => {
     }
 
     if( action.type === "DECREMENT_OF_CART_ITEMS"){
-        console.log(state.cartItems);
+        // console.log(state.cartItems);
         state.cartItems.forEach( (val, index) => {
-            console.log(val.id);
+            // console.log(val.id);
             if( val.id === action.data ){
                 if(val.increment === 1){
                     state.cartItems.pop(index);
@@ -75,7 +156,7 @@ const reducer = ( state, action) => {
                 return;
             }
         })
-        console.log(state.cartItems);
+        // console.log(state.cartItems);
         return {
             ...state
         }

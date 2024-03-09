@@ -7,7 +7,6 @@ const Cart = () => {
 
     const CartDataArray = dataOfCartCtx.cartItems;
 
-    // console.log(CartDataArray);
 
     let listXml = "No data Found, Add to Order";
     let totalAMount = 0;
@@ -15,7 +14,9 @@ const Cart = () => {
    if(CartDataArray.length > 0){
 
     CartDataArray.forEach( (val) => {
-        totalAMount += (+val.price)*(+val.increment);
+        console.log("Total AMount calculation");
+        console.log((+val.price)*(+val.lCount));
+        totalAMount += (+val.price)*(+val.lCount) + (+val.price)*(+val.mCount) + (+val.price)*(+val.sCount) ;
     });
      
         listXml =  (<div className={style.itemListContainer}> 
@@ -26,15 +27,22 @@ const Cart = () => {
                    <div>{val.name}</div>
                    <div className={style.descContainer}>{val.desc}</div>
                 </div>
+                <div className={style.itemPriceContainer}>{val.sizeType} </div>
             <div className={style.itemPriceContainer}>${val.price} </div>
             <div className={style.itemButtons}>
                 
                  <div>
-                 <button className={style.negButton} id= {val.id} onClick= { (e) => {
+
+                 <button className={style.negButton} id= {val.id + val.sizeType} onClick= { (e) => {
+                    console.log(e.target.id);
+                    console.log(e.target.value);
                     dataOfCartCtx.cartDecrement(e.target.id)
                  }}>-</button>
-                 {val.increment}
-                 <button className={style.posButton} id= {val.id} onClick={(e) => {
+
+                 {val.lCount + val.mCount + val.sCount}
+                 <button className={style.posButton} id= {val.id} val={val.sizeType} onClick={(e) => {
+                    console.log(e.target.id);
+                    console.log(e.target.value);
                     dataOfCartCtx.cartIncrement(e.target.id);
                  }}>+</button>
                  </div>
