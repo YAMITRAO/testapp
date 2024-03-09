@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react'
+import React, { useEffect, useReducer } from 'react'
 import DataContext from './DataContext'
 
 const reducer = ( state, action) => {
@@ -6,16 +6,18 @@ const reducer = ( state, action) => {
     if(action.type === "ADD_TO_ITEMS_LIST"){
         const updatedItemsList = [action.data,...state.itemsList]
 
+        //update to localstorage
+        localStorage.setItem('state', JSON.stringify({...state, 
+            itemsList: updatedItemsList,}))
+        //
+
         return {
             ...state, 
             itemsList: updatedItemsList,
         }
     }
-
     if( action.type === "ADD_TO_CART_ITEMS"){
-    
-
-         state.itemsList.forEach( (val, index) => { 
+        state.itemsList.forEach( (val, index) => { 
             if(val.id === action.data.id ){
            
                 if(action.data.sizeType === "L" && val.lSize > 0){
@@ -127,18 +129,21 @@ const reducer = ( state, action) => {
          }
         });
         // console.log(state.cartItems);
+        localStorage.setItem('state', JSON.stringify({...state}));
         return{...state}
                  
         
     }
 
     if(action.type === "CART_VISIBILITY_TRUE"){
+        localStorage.setItem('state', JSON.stringify({...state, isCartVisible: true}))
         return {
             ...state,
             isCartVisible: true,
         }
     }
     else if(action.type === "CART_VISIBILITY_FALSE"){
+        localStorage.setItem('state', JSON.stringify({...state, isCartVisible: false}))
         return {
             ...state,
             isCartVisible: false,
@@ -266,7 +271,7 @@ const reducer = ( state, action) => {
             //     }
             // })
         }
-
+        localStorage.setItem('state', JSON.stringify({...state}))
         return{ ...state }
     }
 
@@ -279,18 +284,47 @@ const reducer = ( state, action) => {
 const DataProvider = (props) => {
 
      
-    const defaultState = {
-        itemsList :  [
-            {id:"c1", name:"Adidas", desc: "Cotton", price: 50, lSize:10,mSize:10,sSize:10},
-            {id:"c2", name:"Nike", desc: "Popline", price: 70,lSize:10,mSize:20,sSize:21},
-            {id:"c3", name:"Levi's", desc: "Broadcloth", price: 60, lSize:0,mSize:200,sSize:300},
-            {id:"c4", name:"Tommy", desc: "Dobby", price: 80, lSize:100,mSize:200,sSize:300},
-            {id:"c5", name:"Allen Solly", desc: "Flannel", price: 40, lSize:100,mSize:200,sSize:300},
-          ],
+    // const defaultState = {
+    //     itemsList :  [
+    //         {id:"c1", name:"Adidas", desc: "Cotton", price: 50, lSize:10,mSize:10,sSize:10},
+    //         {id:"c2", name:"Nike", desc: "Popline", price: 70,lSize:10,mSize:20,sSize:21},
+    //         {id:"c3", name:"Levi's", desc: "Broadcloth", price: 60, lSize:0,mSize:200,sSize:300},
+    //         {id:"c4", name:"Tommy", desc: "Dobby", price: 80, lSize:100,mSize:200,sSize:300},
+    //         {id:"c5", name:"Allen Solly", desc: "Flannel", price: 40, lSize:100,mSize:200,sSize:300},
+    //       ],
 
-          cartItems: [],
-          isCartVisible : false,
-    }
+    //       cartItems: [],
+    //       isCartVisible : false,
+    // }
+
+    // localStorage.setItem('state', JSON.stringify(defaultState));
+    // let data = JSON.parse(localStorage.getItem('state'));
+
+   
+        if( JSON.stringify(localStorage.getItem('state')) != 'null' ){
+            console.log("Data is local storage is available")
+        }
+        else if(JSON.stringify(localStorage.getItem('state')) == 'null'){
+            const data = {
+                itemsList :  [
+                    // {id:"c1", name:"Adidas", desc: "Cotton", price: 50, lSize:10,mSize:10,sSize:10},
+                    // {id:"c2", name:"Nike", desc: "Popline", price: 70,lSize:10,mSize:20,sSize:21},
+                    // {id:"c3", name:"Levi's", desc: "Broadcloth", price: 60, lSize:0,mSize:200,sSize:300},
+                    // {id:"c4", name:"Tommy", desc: "Dobby", price: 80, lSize:100,mSize:200,sSize:300},
+                    // {id:"c5", name:"Allen Solly", desc: "Flannel", price: 40, lSize:100,mSize:200,sSize:300},
+                  ],
+        
+                  cartItems: [],
+                  isCartVisible : false,
+            }
+
+            localStorage.setItem('state', JSON.stringify(data));
+        }
+
+
+    const defaultState = JSON.parse(localStorage.getItem('state'))
+    console.log(defaultState);
+
 
       const [state, dispatchFun ] = useReducer( reducer, defaultState);
 
