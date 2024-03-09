@@ -1,0 +1,89 @@
+
+
+.itemContainer{
+    width:80%;
+    max-height: 500px;
+    overflow: scroll;
+    background-color: rgb(211, 195, 195);
+    border-radius: 1rem;
+    margin: 0px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 20px 0px;
+}
+
+
+.selfContainer{
+    display: flex;
+    flex-direction: row;
+    width: 95%;
+    justify-content: space-between;
+    font-family: monospace;
+    font-size: 20px;
+    background-color: white;
+    margin: 3px;
+    padding: 5px 20px;
+    box-sizing: border-box;
+    border-radius: 1rem;
+}
+
+.lSize,.mSize,.sSize{
+    width:100px;
+}
+
+.lSize >button {
+    border: none;
+    background-color: rgb(215, 127, 27);
+    border-radius: 18px;
+    padding: 6px 15px ;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    font-family: monospace;
+}
+
+.mSize > button {
+    border: none;
+    background-color: rgb(192, 152, 21);
+    border-radius: 18px;
+    padding: 6px 15px ;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    font-family: monospace;
+}
+
+.sSize > button {
+    border: none;
+    background-color: rgb(143, 110, 18);
+    border-radius: 18px;
+    padding: 6px 15px ;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    font-family: monospace;
+}
+
+.lSize > button:hover, .mSize > button:hover, .sSize > button:hover{
+    cursor: pointer;
+    scale: 1.05;
+}
+
+.itemName, .itemDesc  {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    /* background-color: red; */
+    height: auto;
+    width: 10rem;
+}
+
+.itemDesc{
+    font-size: 14px;
+    overflow: scroll;
+}
+
+
+

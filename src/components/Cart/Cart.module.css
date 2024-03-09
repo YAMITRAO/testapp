@@ -1,0 +1,137 @@
+.cartContainer{
+    position:fixed;
+    width: 100%;
+    height:100%;
+    background-color: rgba(213, 207, 207, 0.5);
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: center;
+    /* align-items: center; */
+}
+
+.cartItemContainer{
+    width: 40%;
+    max-height: 50%;
+    background-color: rgb(79, 195, 237);
+    position: absolute;
+    top: 140px;
+    border-radius: 18px;
+    padding:10px 20px 10px 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
+.itemListContainer{
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+    /* align-items: center; */
+    gap: 1rem;
+    border: 2px dashed rgb(165, 122, 14);
+    padding:10px;
+    overflow: scroll;
+    border-radius: 10px;
+}
+
+.singleItemContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+}
+
+ .itemDetailContainer{
+    font-size: 20px;
+    font-weight: bold;
+    color: rgb(242, 246, 247);
+    width:25%;
+    overflow-x: scroll;
+}
+
+.itemDetailContainer > .descContainer {
+    font-size: 12px;
+    color: aliceblue;
+}
+
+.itemPriceContainer{
+    font-size: 22px;
+    color: rgb(116, 26, 18);
+    font-weight: bold;
+}
+
+.itemButtons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.itemButtons > div{
+    
+    border-radius: 20%;
+    background-color: rgb(242, 246, 247);
+    font-size: 22px;
+    font-weight: bold;
+    padding-bottom: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+ .negButton,  .posButton{
+    cursor: pointer;
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
+    color: rgb(20, 93, 7);
+    outline: none;
+    background-color: transparent;
+}
+
+.negButton:hover,  .posButton:hover{
+    scale: 1.3;
+   
+}
+.negButton{
+    font-size: 28px;
+    color: red;
+}
+
+.totalAmountContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    gap: 1rem;
+    color: rgb(252, 252, 248);
+    border-radius: 10px;
+    border: 2px dashed rgb(128, 93, 5);
+    padding:10px;
+}
+
+.cartButtons{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+.cartButtons> button {
+    cursor: pointer;
+    border: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+    background-color: rgb(188, 159, 14);
+    color: rgb(244, 238, 238);
+    border-radius: 1.5rem;
+    padding: 5px 15px;
+}
+
+.cartButtons> button:hover{
+    scale: 1.02;
+    background-color: rgb(203, 172, 18);
+
+}

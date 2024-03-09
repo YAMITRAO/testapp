@@ -1,0 +1,47 @@
+.headerContainer{
+    height: 5rem;
+    width:100%;
+    background-color: rgb(10, 125, 157);
+    display: flex;
+    justify-content: space-around;
+    padding-top: 1.5rem;
+}
+
+.logo{
+    font-size: 2rem;
+    color:rgb(227, 227, 42);
+    font-weight: bold;
+    font-family: monospace;
+}
+
+.cart{
+    cursor: pointer;
+    display: flex;
+    gap: 1rem;
+    width:200px;
+    height: 40px;
+    padding: 0px 10px;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(139, 6, 6);
+    border-radius: 18px;
+    color: white;
+    outline: none;
+    border: none;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.cart:hover{
+    scale: 1.02;
+    background-color:rgb(167, 16, 16) ;
+}
+
+.cartCount{
+    background: rgb(206, 187, 187);
+    padding: 2px 8px;
+    border-radius: 50%;
+}
+.cartIcon {
+    font-size: 28px;
+}
